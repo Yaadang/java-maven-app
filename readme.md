@@ -1,29 +1,27 @@
-Project Description
-
-
-Pre-requisites
+## Project Description
+Create a complete CI-CD pipeline using EKS, Jenkins, and ECR
+### Technology Used
+Kubernetes, Jenkins, EKS, ECR, Java, Maven, Linux, Docker, GIT
+### Pre-requisites
 
 - A Jenkins server and Kubernetes Cluster using eksctl
 
-Setup Steps
+### Setup Steps
 
-Install kubectl inside Jenkins Container:
+- Install kubectl inside Jenkins Container:
     SSH into your Jenkins server.
     Access the Jenkins container:
 
 bash
     docker exec -it [jenkins_container_id] /bin/bash
 
-Install kubectl:
+Install kubectl &  aws-iam-authenticator
 
-bash
+    bash
 
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     chmod +x kubectl
     mv kubectl /usr/local/bin/
-
-Install aws-iam-authenticator inside Jenkins Container:
-
     Still inside the Jenkins container, install aws-iam-authenticator:
 
     bash
@@ -47,6 +45,7 @@ Create an ECR Repository:
     Click on "Create Repository" and follow the on-screen instructions.
 
 Create Jenkins Credentials:
+
     Navigate to your Jenkins dashboard.
     Go to 'Manage Jenkins' > 'Manage Credentials'.
     Add a new global credential with the ECR repository details named ecr-credentials.
@@ -67,6 +66,8 @@ Set up AWS ECR Registry Secret in EKS:
 Update Jenkinsfile:
 
     Modify Jenkinsfile to cater to the ECR setup and deployment.
+    bash
+    kubectl create deployment ## if you havent yet created a EKS cluster using the jenkins server.
     Use the Deployment and service files to connect, build, version increment and deploy to the EKS cluster that it created and connected to
 
 Execute the Jenkins Pipeline:
